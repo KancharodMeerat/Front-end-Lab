@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-import data from '../app/data';
 import Product from './Product';
 import AddForm from './Product/AddForm';
+
+
 
 let currentProductId = 9;
 
 export default function Home() {
     const [products, setProducts] = useState([]);
+
+    async function getProducts() {
+      const products = await axios.get(
+        'https://apimocha.com/kancharod/products'
+      );
+      setProducts(products);
+    }
+    
+    getProducts();
   
     function addProduct(product) {
       const newProduct = { id: ++currentProductId, ...product };
